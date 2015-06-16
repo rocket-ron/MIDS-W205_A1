@@ -1,0 +1,56 @@
+W205 Assignment 1
+
+Question #3 - Time to run test-1.warc
+Local
+=================================
+real	1m13.821s
+user	1m12.574s
+sys	0m1.183s
+
+
+AWS emr
+=================================
+Job completed.
+Running time was 271.0s (not counting time spent waiting for the EC2 instances)
+
+real	19m53.144s
+user	0m0.988s
+sys	0m0.221s
+
+
+Question #4 - How many "address" tags are in the input?
+Local count:
+=================================
+egrep '^\"address\"' part-*
+"address"	2042
+
+AWS EMR count:
+=================================
+rcordell$ egrep '^\"address\"' part-*
+"address"	2042
+
+Question #5 - Does the local version give the same answer as the emr version?
+Yes, both counted 2042. However a simple grep for 'address' over all the part-* files gives slightly different output:
+
+Local:
+=================================
+rcordell$ grep 'address' part-*
+"address"	2042
+"addresses"	19
+"addressother"	1
+"ccbillingaddress"	1
+"creditcardbillingaddress"	1
+"emailaddressalternate"	1
+"eoneaddress"	1
+"otheraddresses"	31
+
+EMR:
+=================================
+part-00000:"ccbillingaddress"	1
+part-00000:"otheraddresses"	31
+part-00001:"address"	2042
+part-00001:"eoneaddress"	1
+part-00003:"addressother"	1
+part-00003:"creditcardbillingaddress"	1
+part-00004:"addresses"	19
+part-00004:"emailaddressalternate"	1
